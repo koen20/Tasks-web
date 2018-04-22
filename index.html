@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tasks</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <link rel="stylesheet" href="css/material.css"/>
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
 
@@ -15,6 +16,7 @@
     <script src="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.js"></script>
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.css"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="css/main.css">
 
 </head>
 <body>
@@ -26,9 +28,11 @@
             <span class="mdl-layout__title">Tasks</span>
             <div class="mdl-layout-spacer"></div>
             <nav class="mdl-navigation">
-                <a class="mdl-navigation__link" href="#">Nav link 1</a>
-                <a class="mdl-navigation__link" href="#">Nav link 2</a>
-                <a class="mdl-navigation__link" href="#">Nav link 3</a>
+                <a class="mdl-navigation_link"><label for="switch1" class="mdl-switch mdl-js-switch">
+                    <input type="checkbox" id="switch1" class="mdl-switch__input">
+                    <span class="mdl-switch__label" style="color: white;">Show completed </span>
+                </label></a>
+                <a class="mdl-navigation__link" href="#" id="sign-out" style="margin-left: 15px">Sign out</a>
             </nav>
         </div>
     </header>
@@ -42,10 +46,11 @@
     </div>
     <main class="mdl-layout__content">
         <div id="taskItems">
-            <ul class="mdl-list" id="taskItemsList"></ul>
+            <ul class="mdl-list" id="taskItemsList">
+            </ul>
         </div>
-        <button class="mdl-button mdl-js-button mdl-button--raised" id="sign-out">
-            Sign out
+        <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+            <i class="material-icons">add</i>
         </button>
     </main>
 </div>

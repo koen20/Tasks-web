@@ -17,7 +17,13 @@ function databaseLoad(id) {
         $("#taskItemsList").empty();
         snapshot.forEach(function (childSnapshot) {
             if (!childSnapshot.val().completed) {
-                $("#taskItemsList").append("<li class=\"mdl-list__item\">" + childSnapshot.val().subject + "</li>");
+                var liContent = "<label class=\"mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect\" style=\'width: auto\'>\n" +
+                    "        <input type=\"checkbox\" class=\"mdl-checkbox__input\"/>\n" +
+                    "</label> " + childSnapshot.val().subject;
+
+
+                $("#taskItemsList").append("<li class=\"mdl-list__item\">" + liContent + "</li>");
+                componentHandler.upgradeDom();
             }
         });
     });
