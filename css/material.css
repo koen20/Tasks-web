@@ -4041,7 +4041,7 @@ fieldset[disabled] .mdl-checkbox .mdl-checkbox__ripple-container .mdl-ripple, .m
 
 .mdl-list__item {
     font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 400;
     letter-spacing: .04em;
     line-height: 1;
@@ -4134,7 +4134,7 @@ fieldset[disabled] .mdl-checkbox .mdl-checkbox__ripple-container .mdl-ripple, .m
 }
 
 .mdl-list__item--two-line {
-    height: 72px
+    height: 70px
 }
 
 .mdl-list__item--two-line .mdl-list__item-primary-content {
