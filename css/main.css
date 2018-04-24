@@ -1,0 +1,18 @@
+#low .mdl-radio__inner-circle{
+    background-color: darkgray;
+}
+#medium .mdl-radio__inner-circle{
+    background-color: orange;
+}
+#high .mdl-radio__inner-circle{
+    background-color: red;
+}
+#low .mdl-radio__outer-circle{
+    border-color: darkgray;
+}
+#medium .mdl-radio__outer-circle{
+    border-color: orange;
+}
+#high .mdl-radio__outer-circle{
+    border-color: red;
+}

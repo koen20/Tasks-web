@@ -63,15 +63,44 @@ window.onload = function () {
     document.getElementById('sign-out').addEventListener('click', function () {
         firebase.auth().signOut();
     });
+    $('#addTask').click(function () {
+        var dialog = document.querySelector('#dialog');
+        if (!dialog.showModal) {
+            dialogPolyfill.registerDialog(dialog);
+        }
+        dialog.showModal();
+    });
+    $('#dialogAddTask').click(function () {
+        var subject = $("#addTaskSubject").val();
+        var priority = parseInt($('input[name=options]:checked').val());
+        console.log(priority);
+        var d = firebase.database().ref('users/' + userId).child("items").push();
+        d.set({
+            subject: subject,
+            id: d.getKey(),
+            date: 0,
+            priority: priority
+        });
+        document.querySelector('#dialog').close();
+    });
+    var dialog = new mdDateTimePicker.default({
+        type: 'date',
+        orientation: 'PORTRAIT'
+    });
+    $('#addTaskDate').click(function () {
+        //$("#dialog").hide();
+        //$(".mdl-layout__obfuscator").hide();
+        //dialog.toggle();
+    });
 };
 
 $("#taskItemsList").on("click", "input[type='checkbox']", function () {
     if (this.checked) {
         console.log("checked");
         console.log($(this).parent().parent().children("span").text());
-        for(var i = 0; i < jsonArray.length; i++) {
+        for (var i = 0; i < jsonArray.length; i++) {
             var jsonObject = jsonArray[i];
-            if(jsonObject.subject === $(this).parent().parent().children("span").text()){
+            if (jsonObject.subject === $(this).parent().parent().children("span").text()) {
                 firebase.database().ref('users/' + userId + '/items/' + jsonObject.id).child("completed").set(true);
             }
         }

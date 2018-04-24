@@ -17,7 +17,7 @@
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.css"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="css/main.css">
-
+    <link rel="stylesheet" href="css/mdDateTimePicker.css">
 </head>
 <body>
 <div id="firebaseui-auth-container"></div>
@@ -49,11 +49,41 @@
             <ul class="mdl-list" id="taskItemsList">
             </ul>
         </div>
-        <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" style="">
+        <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" id="addTask" style="">
             <i class="material-icons">add</i>
         </button>
+        <dialog class="mdl-dialog" id="dialog">
+            <h5 class="mdl-dialog__title">Add task</h5>
+            <div class="mdl-dialog__content">
+                <div class="mdl-textfield mdl-js-textfield">
+                    <input class="mdl-textfield__input" type="text" id="addTaskSubject">
+                    <label class="mdl-textfield__label" for="addTaskSubject">Subject</label>
+                </div>
+                <!---priority-->
+                <h5 style="width: 100px;">priority</h5>
+                <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1" id="low">
+                    <input type="radio" id="option-1" class="mdl-radio__button" name="options" value="0" checked></label>
+                <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2" id ="medium">
+                    <input type="radio" id="option-2" class="mdl-radio__button" name="options" value="1"></label>
+                <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-3" id="high">
+                    <input type="radio" id="option-3" class="mdl-radio__button" name="options" value="2">
+                </label>
+
+                <!---date-->
+                <div class="mdl-textfield mdl-js-textfield">
+                    <input class="mdl-textfield__input" type="text" id="addTaskDate">
+                    <label class="mdl-textfield__label" for="addTaskDate">Date</label>
+                </div>
+            </div>
+            <div class="mdl-dialog__actions">
+                <button type="button" class="mdl-button" id="dialogAddTask">Add task</button>
+            </div>
+        </dialog>
     </main>
 </div>
+<script src="js/DateTimePicker/moment.min.js"></script>
+<script src="js/DateTimePicker/draggabilly.pkgd.min.js"></script>
+<script src="js/DateTimePicker/mdDateTimePicker.js"></script>
 <script src="js/login.js"></script>
 <script src="js/main.js"></script>
 </body>
