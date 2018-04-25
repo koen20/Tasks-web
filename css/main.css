@@ -16,3 +16,9 @@
 #high .mdl-radio__outer-circle{
     border-color: red;
 }
+
+#addTask{
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+}

@@ -1,11 +1,12 @@
 var jsonArray = JSON.parse("[]");
 var userId;
+var showCompleted = false;
 
 firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
         console.log("signed in " + user.uid);
         handleSignedIn();
-        databaseLoad(user.uid);
+        databaseLoad(user.uid, showCompleted);
         userId = user.uid;
     } else {
         console.log("signed out");
@@ -14,7 +15,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     }
 });
 
-function databaseLoad(id) {
+function databaseLoad(id, showCompleted) {
     var database = firebase.database();
     var ref = database.ref('users/' + id + '/items');
     ref.on('value', function (snapshot) {
@@ -26,10 +27,18 @@ function databaseLoad(id) {
             } else if (childSnapshot.val().priority === 1) {
                 colorr = "style=\"color: #FB8C00;\"";
             }
-            if (!childSnapshot.val().completed) {
+            var subject = childSnapshot.val().subject;
+            var completed = childSnapshot.val().completed;
+            if (!completed || showCompleted === true) {
                 var liContent = "<span class=\"mdl-list__item-primary-content\">\n    <label class=\"mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect\" style=\'width: auto\'>\n       " +
-                    " <input type=\"checkbox\" class=\"mdl-checkbox__input\"/>\n    </label>\n" +
-                    "\n<span " + colorr + ">" + childSnapshot.val().subject + "</span>" +
+                    " <input type=\"checkbox\" class=\"mdl-checkbox__input\" ";
+                if (completed){
+                    liContent = liContent + "checked"
+                }
+                    liContent = liContent +
+
+                    "/>\n    </label>\n" +
+                    "\n<span " + colorr + ">" + subject + "</span>" +
                     "<span class=\"mdl-list__item-sub-title\">" + getStringTs(childSnapshot.val().date) + "</span>\n</span>";
 
 
@@ -92,19 +101,22 @@ window.onload = function () {
         //$(".mdl-layout__obfuscator").hide();
         //dialog.toggle();
     });
+    $('#checkboxShowCompleted').change(function() {
+        if(this.checked) {
+            showCompleted = true;
+            databaseLoad(userId, showCompleted);
+        } else {
+            showCompleted = false;
+            databaseLoad(userId, showCompleted);
+        }
+    });
 };
 
 $("#taskItemsList").on("click", "input[type='checkbox']", function () {
-    if (this.checked) {
-        console.log("checked");
-        console.log($(this).parent().parent().children("span").text());
-        for (var i = 0; i < jsonArray.length; i++) {
-            var jsonObject = jsonArray[i];
-            if (jsonObject.subject === $(this).parent().parent().children("span").text()) {
-                firebase.database().ref('users/' + userId + '/items/' + jsonObject.id).child("completed").set(true);
-            }
+    for (var i = 0; i < jsonArray.length; i++) {
+        var jsonObject = jsonArray[i];
+        if (jsonObject.subject === $(this).parent().parent().children("span").text()) {
+            firebase.database().ref('users/' + userId + '/items/' + jsonObject.id).child("completed").set(this.checked);
         }
-    } else {
-        console.log("unchecked");
     }
 });
