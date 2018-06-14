@@ -17,7 +17,7 @@ firebase.auth().onAuthStateChanged(function (user) {
 
 function databaseLoad(id, showCompleted) {
     var database = firebase.database();
-    var ref = database.ref('users/' + id + '/items');
+    var ref = database.ref('users/' + id + '/items').orderByChild("date");
     ref.on('value', function (snapshot) {
         $("#taskItemsList").empty();
         snapshot.forEach(function (childSnapshot) {
@@ -26,6 +26,14 @@ function databaseLoad(id, showCompleted) {
                 colorr = "style=\"color: #F44336;\"";
             } else if (childSnapshot.val().priority === 1) {
                 colorr = "style=\"color: #FB8C00;\"";
+            }
+            var c = "";
+            console.log(new Date().getTime() + "");
+            console.log(childSnapshot.val().date - 2592034842);
+            console.log(getStringTs(childSnapshot.val().date));
+            if (childSnapshot.val().date - 2592034842 < new Date().getTime()){
+                console.log("jaasdf");
+                c = "style=\"color: #ff4949;\"";
             }
             var subject = childSnapshot.val().subject;
             var completed = childSnapshot.val().completed;
@@ -38,8 +46,8 @@ function databaseLoad(id, showCompleted) {
                     liContent = liContent +
 
                     "/>\n    </label>\n" +
-                    "\n<span " + colorr + ">" + subject + "</span>" +
-                    "<span class=\"mdl-list__item-sub-title\">" + getStringTs(childSnapshot.val().date) + "</span>\n</span>";
+                    "\n<span class=\"taskTitle\" " + colorr + ">" + subject + "</span>" +
+                    "<span class=\"mdl-list__item-sub-title\" " + c + ">" + getStringTs(childSnapshot.val().date) + "</span>\n</span>";
 
 
                 $("#taskItemsList").append("<li class=\"mdl-list__item mdl-list__item--two-line\">" + liContent + "</li>");
@@ -51,6 +59,7 @@ function databaseLoad(id, showCompleted) {
                 jsonArray.push(jsonObject);
             }
         });
+        $("#spinner-list").hide();
     });
 }
 
@@ -92,6 +101,9 @@ window.onload = function () {
         });
         document.querySelector('#dialog').close();
     });
+    $('.cancel').click(function () {
+        document.querySelector('#dialog').close();
+    });
     var dialog = new mdDateTimePicker.default({
         type: 'date',
         orientation: 'PORTRAIT'
@@ -115,7 +127,7 @@ window.onload = function () {
 $("#taskItemsList").on("click", "input[type='checkbox']", function () {
     for (var i = 0; i < jsonArray.length; i++) {
         var jsonObject = jsonArray[i];
-        if (jsonObject.subject === $(this).parent().parent().children("span").text()) {
+        if (jsonObject.subject === $(this).parent().parent().children(".taskTitle").text()) {
             firebase.database().ref('users/' + userId + '/items/' + jsonObject.id).child("completed").set(this.checked);
         }
     }

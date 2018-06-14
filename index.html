@@ -7,13 +7,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="css/material.css"/>
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
 
-    <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase-database.js"></script>
     <script src="js/config.js"></script>
-    <script src="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.js"></script>
+    <script src="https://cdn.firebase.com/libs/firebaseui/3.0.0/firebaseui.js"></script>
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/2.5.1/firebaseui.css"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="css/main.css">
@@ -45,11 +45,12 @@
         </nav>
     </div>
     <main class="mdl-layout__content">
+        <div class="mdl-spinner mdl-js-spinner is-active" id="spinner-list"></div>
         <div id="taskItems">
             <ul class="mdl-list" id="taskItemsList">
             </ul>
         </div>
-        <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" id="addTask" style="">
+        <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored" id="addTask">
             <i class="material-icons">add</i>
         </button>
         <dialog class="mdl-dialog" id="dialog">
@@ -62,8 +63,9 @@
                 <!---priority-->
                 <h5 style="width: 100px;">priority</h5>
                 <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1" id="low">
-                    <input type="radio" id="option-1" class="mdl-radio__button" name="options" value="0" checked></label>
-                <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2" id ="medium">
+                    <input type="radio" id="option-1" class="mdl-radio__button" name="options" value="0"
+                           checked></label>
+                <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2" id="medium">
                     <input type="radio" id="option-2" class="mdl-radio__button" name="options" value="1"></label>
                 <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-3" id="high">
                     <input type="radio" id="option-3" class="mdl-radio__button" name="options" value="2">
@@ -77,6 +79,7 @@
             </div>
             <div class="mdl-dialog__actions">
                 <button type="button" class="mdl-button" id="dialogAddTask">Add task</button>
+                <button type="button" class="mdl-button cancel">Cancel</button>
             </div>
         </dialog>
     </main>
