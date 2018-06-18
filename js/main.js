@@ -1,4 +1,5 @@
 var jsonArray = JSON.parse("[]");
+var jsonArrayTags = JSON.parse("[]");
 var userId;
 var showCompleted = false;
 
@@ -6,6 +7,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
         console.log("signed in " + user.uid);
         handleSignedIn();
+        getTags(user.uid);
         databaseLoad(user.uid, showCompleted);
         userId = user.uid;
     } else {
@@ -28,16 +30,16 @@ function databaseLoad(id, showCompleted) {
                 colorr = "style=\"color: #FB8C00;\"";
             }
             var c = "";
-            console.log(new Date().getTime() + "");
-            console.log(childSnapshot.val().date - 2592034842);
-            console.log(getStringTs(childSnapshot.val().date));
+            //console.log(new Date().getTime() + "");
+            //console.log(childSnapshot.val().date - 2592034842);
+            //console.log(getStringTs(childSnapshot.val().date));
             if (childSnapshot.val().date - 2592034842 < new Date().getTime()){
-                console.log("jaasdf");
                 c = "style=\"color: #ff4949;\"";
             }
             var subject = childSnapshot.val().subject;
             var completed = childSnapshot.val().completed;
             if (!completed || showCompleted === true) {
+                var tags = getStringTags(jsonArrayTags, childSnapshot.val().tags);
                 var liContent = "<span class=\"mdl-list__item-primary-content\">\n    <label class=\"mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect\" style=\'width: auto\'>\n       " +
                     " <input type=\"checkbox\" class=\"mdl-checkbox__input\" ";
                 if (completed){
@@ -46,7 +48,7 @@ function databaseLoad(id, showCompleted) {
                     liContent = liContent +
 
                     "/>\n    </label>\n" +
-                    "\n<span class=\"taskTitle\" " + colorr + ">" + subject + "</span>" +
+                    "\n<span class=\"taskTitle\" " + colorr + ">" + subject + "</span>" + tags +
                     "<span class=\"mdl-list__item-sub-title\" " + c + ">" + getStringTs(childSnapshot.val().date) + "</span>\n</span>";
 
 
@@ -61,6 +63,32 @@ function databaseLoad(id, showCompleted) {
         });
         $("#spinner-list").hide();
     });
+}
+
+function getTags(id) {
+    var database = firebase.database();
+    var ref = database.ref('users/' + id + '/tags');
+    ref.on('value', function (snapshot) {
+        jsonArrayTags = JSON.parse("[]");
+        snapshot.forEach(function (childSnapshot) {
+            var object = JSON.parse("{}");
+            object.name = childSnapshot.val().name;
+            object.key = childSnapshot.name();
+            jsonArrayTags.push(object);
+        });
+        console.log(JSON.stringify(jsonArrayTags));
+    });
+}
+
+function getStringTags(jsonArrayTT, jsonArrayT) {
+    for (var i = 0; i < jsonArrayT.length; i++){
+        for (var d = 0; d < jsonArrayTT.length; d++){
+            var object = jsonArrayTT[d];
+            if (object.key === jsonArrayT[i]){
+                console.log(jsonArrayTT.name);
+            }
+        }
+    }
 }
 
 function getStringTs(ts) {
