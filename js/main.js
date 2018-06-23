@@ -48,8 +48,8 @@ function databaseLoad(id, showCompleted) {
                     liContent = liContent +
 
                     "/>\n    </label>\n" +
-                    "\n<span class=\"taskTitle\" " + colorr + ">" + subject + "</span>" + tags +
-                    "<span class=\"mdl-list__item-sub-title\" " + c + ">" + getStringTs(childSnapshot.val().date) + "</span>\n</span>";
+                    "\n<span class=\"taskTitle\" " + colorr + ">" + subject + "</span><span>" + tags +
+                    "</span><span class=\"mdl-list__item-sub-title\" " + c + ">" + getStringTs(childSnapshot.val().date) + "</span>\n</span>";
 
 
                 $("#taskItemsList").append("<li class=\"mdl-list__item mdl-list__item--two-line\">" + liContent + "</li>");
@@ -73,7 +73,7 @@ function getTags(id) {
         snapshot.forEach(function (childSnapshot) {
             var object = JSON.parse("{}");
             object.name = childSnapshot.val().name;
-            object.key = childSnapshot.name();
+            object.key = childSnapshot.key;
             jsonArrayTags.push(object);
         });
         console.log(JSON.stringify(jsonArrayTags));
@@ -81,14 +81,26 @@ function getTags(id) {
 }
 
 function getStringTags(jsonArrayTT, jsonArrayT) {
-    for (var i = 0; i < jsonArrayT.length; i++){
-        for (var d = 0; d < jsonArrayTT.length; d++){
-            var object = jsonArrayTT[d];
-            if (object.key === jsonArrayT[i]){
-                console.log(jsonArrayTT.name);
+    var tagsString = "";
+    try {
+        jsonArrayT = JSON.parse(jsonArrayT);
+        console.log(JSON.stringify(jsonArrayT));
+        //jsonArrayT = JSON.parse(jsonArrayT);
+        for (var i = 0; i < jsonArrayT.length; i++) {
+            for (var d = 0; d < jsonArrayTT.length; d++) {
+                var object = jsonArrayTT[d];
+                //console.log(object.key);
+                //console.log(jsonArrayT[i]);
+                if (object.key === jsonArrayT[i]) {
+                    console.log(object.name);
+                    tagsString = tagsString + object.name + " "
+                }
             }
         }
+    } catch (e) {
+        
     }
+    return tagsString;
 }
 
 function getStringTs(ts) {
