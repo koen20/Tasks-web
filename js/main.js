@@ -48,7 +48,7 @@ function databaseLoad(id, showCompleted) {
                     liContent = liContent +
 
                     "/>\n    </label>\n" +
-                    "\n<span class=\"taskTitle\" " + colorr + ">" + subject + "</span><span>" + tags +
+                    "\n<span class=\"taskTitle\" " + colorr + ">" + subject + "</span><span> " + tags +
                     "</span><span class=\"mdl-list__item-sub-title\" " + c + ">" + getStringTs(childSnapshot.val().date) + "</span>\n</span>";
 
 
@@ -80,18 +80,16 @@ function getTags(id) {
     });
 }
 
-function getStringTags(jsonArrayTT, jsonArrayT) {
+function getStringTags(jsonArrayTT, arrayTags) {
     var tagsString = "";
     try {
-        jsonArrayT = JSON.parse(jsonArrayT);
-        console.log(JSON.stringify(jsonArrayT));
         //jsonArrayT = JSON.parse(jsonArrayT);
-        for (var i = 0; i < jsonArrayT.length; i++) {
+        for (var i = 0; i < arrayTags.length; i++) {
             for (var d = 0; d < jsonArrayTT.length; d++) {
                 var object = jsonArrayTT[d];
                 //console.log(object.key);
                 //console.log(jsonArrayT[i]);
-                if (object.key === jsonArrayT[i]) {
+                if (object.key === arrayTags[i]) {
                     console.log(object.name);
                     tagsString = tagsString + object.name + " "
                 }
