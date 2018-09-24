@@ -30,10 +30,7 @@ function databaseLoad(id, showCompleted) {
                 colorr = "style=\"color: #FB8C00;\"";
             }
             var c = "";
-            //console.log(new Date().getTime() + "");
-            //console.log(childSnapshot.val().date - 2592034842);
-            //console.log(getStringTs(childSnapshot.val().date));
-            if (childSnapshot.val().date - 2592034842 < new Date().getTime()){
+            if (childSnapshot.val().date < new Date().getTime()){
                 c = "style=\"color: #ff4949;\"";
             }
             var subject = childSnapshot.val().subject;
@@ -104,7 +101,7 @@ function getStringTags(jsonArrayTT, arrayTags) {
 function getStringTs(ts) {
     var date = new Date(ts);
     var day = date.getDate();
-    var month = date.getMonth();
+    var month = date.getMonth() + 1;
     var year = date.getFullYear();
     var hours = date.getHours();
     var minutes = "0" + date.getMinutes();
